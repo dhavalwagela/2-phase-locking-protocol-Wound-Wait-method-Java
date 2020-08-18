@@ -1,0 +1,409 @@
+Input : b1
+This will just create record of T1 with active state and timestamp 1
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: 
+Lock Mode: 
+TransactionId: 
+============================================
+Input : r1(Y)
+No transaction has write locked the data item Y so transaction T1 will read it 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : r1(Z)
+No transaction has write locked the data item Z so transaction T1 will read it 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+Data Item: Z
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : b2
+This will just create record of T2 with active state and timestamp 2
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+Data Item: Z
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : r2(Y)
+No transaction has write locked the data item Y so transaction T2 will read it 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2]
+---------------------------------------
+Data Item: Z
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : b3
+This will just create record of T3 with active state and timestamp 3
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2]
+---------------------------------------
+Data Item: Z
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : r3(Y)
+No transaction has write locked the data item Y so transaction T3 will read it 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2, T3]
+---------------------------------------
+Data Item: Z
+Lock Mode: R
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : w1(Z)
+Current transaction T1 is the oldest one which has locked data item Z so it will write it and all the other transactions if any, will be aborted 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2, T3]
+---------------------------------------
+Data Item: Z
+Lock Mode: W
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : w3(Y)
+T3 is younger than the following transactions [T1, T2] so it will be blocked and the operation w3(Y); will be added to the blocked operations list and these transactions [T1, T2] will be added to the list of blocked by transactions 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Blocked
+Blocked By: [T1, T2]
+Blocked Operations: [w3(Y);]
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2, T3]
+---------------------------------------
+Data Item: Z
+Lock Mode: W
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : w2(Y)
+T2 is younger than the following transactions [T1] so it will be blocked and the operation w2(Y); will be added to the blocked operations list and these transactions [T1] will be added to the list of blocked by transactions 
+Aborting the transaction T3
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Blocked
+Blocked By: [T1]
+Blocked Operations: [w2(Y);]
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Aborted
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2]
+---------------------------------------
+Data Item: Z
+Lock Mode: W
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : r2(X)
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Blocked
+Blocked By: [T1]
+Blocked Operations: [w2(Y);, r2(X);]
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Aborted
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: R
+TransactionId: [T1, T2]
+---------------------------------------
+Data Item: Z
+Lock Mode: W
+TransactionId: [T1]
+---------------------------------------
+============================================
+Input : e1
+Commiting the transaction T1
+Activating if any, the blocked transactions which are blocked by T1 and running their operations 
+Blocked operation w2(Y); by T1 will be executed 
+Current transaction T2 is the oldest one which has locked data item Y so it will write it and all the other transactions if any, will be aborted 
+Blocked operation r2(X); by T1 will be executed 
+No transaction has write locked the data item X so transaction T2 will read it 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Commited
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Aborted
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: W
+TransactionId: [T2]
+---------------------------------------
+Data Item: X
+Lock Mode: R
+TransactionId: [T2]
+---------------------------------------
+============================================
+Input : e3
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Commited
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Aborted
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: W
+TransactionId: [T2]
+---------------------------------------
+Data Item: X
+Lock Mode: R
+TransactionId: [T2]
+---------------------------------------
+============================================
+Input : w2(X)
+Current transaction T2 is the oldest one which has locked data item X so it will write it and all the other transactions if any, will be aborted 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Commited
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Active
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Aborted
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: Y
+Lock Mode: W
+TransactionId: [T2]
+---------------------------------------
+Data Item: X
+Lock Mode: W
+TransactionId: [T2]
+---------------------------------------
+============================================
+Input : e2
+Commiting the transaction T2
+Activating if any, the blocked transactions which are blocked by T2 and running their operations 
+=====================================transaction============================ 
+Transaction ID: T1
+Timestamp: 1
+State: Commited
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T2
+Timestamp: 2
+State: Commited
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+Transaction ID: T3
+Timestamp: 3
+State: Aborted
+Blocked By: []
+Blocked Operations: []
+---------------------------------------
+======================Locks======================
+Data Item: 
+Lock Mode: 
+TransactionId: 
+============================================
+
