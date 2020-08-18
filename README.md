@@ -4,29 +4,29 @@ For r and w operations, an item name follows between parentheses (item names are
 
 Examples of two input files:
 
-b1;                                                                        b1;
+b1;                                                                                                        b1;
 
-r1 (Y);                                                                    r1(Y);
+r1 (Y);                                                                                                    r1(Y);
 
-w1 (Y);                                                                    w1(Y);
+w1 (Y);                                                                                                    w1(Y);
 
-r1 (Z);                                                                    r1(Z);
+r1 (Z);                                                                                                    r1(Z);
 
-b3;                                                                        b2;
+b3;                                                                                                        b2;
 
-r3 (X);                                                                    r2(Y);
+r3 (X);                                                                                                    r2(Y);
 
-w3 (X);                                                                    b3;
+w3 (X);                                                                                                    b3;
 
-w1 (Z);                                                                    r3(Z);
+w1 (Z);                                                                                                    r3(Z);
 
-e1;                                                                        w1(Z);
+e1;                                                                                                        w1(Z);
 
-r3 (Y);                                                                    e1;
+r3 (Y);                                                                                                    e1;
 
-b2;                                                                        w3(Z);
+b2;                                                                                                        w3(Z);
 
-r2 (Z);                                                                    e3;
+r2 (Z);                                                                                                    e3;
 
 w2 (Z);                                                                  
 
