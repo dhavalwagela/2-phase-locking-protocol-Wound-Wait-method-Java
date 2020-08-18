@@ -1,3 +1,33 @@
+Steps to execute the file ConcurrencyControl.java.
+
+1) Navigate using cmd to the location of the file ConcurrencyControl.java
+
+2) Put an input file named as "sample.txt" at the exact location where ConcurrenyControl.java is.
+
+3) Compile the file javac ConcurrencyControl.java
+
+4) Run file java ConcurrencyControl
+
+5) You should get a message as "Output written in output.txt successfully !!" on the cmd.
+
+6) Now check the output in output.txt which should be at the location where sample.txt and ConcurrencyControl.java are.
+
+
+Output files are provided for corresponding inputs which were uploaded on canvas 
+
+
+output1.txt corresponds to input1.txt
+
+output2.txt corresponds to input2.txt
+
+output3.txt corresponds to input3.txt
+
+output4.txt corresponds to input4.txt
+
+
+For executing inputs, rename any input file to "sample.txt" and corresponding output file will be generated when program will successfully execute.
+
+
 Implemented a program that simulates the behavior of the two-phase locking (2PL) protocol for concurrency control. The particular protocol to be implemented will be rigorous 2PL, with the wound-wait method for dealing with deadlock. The input to the program will be a file of transaction operations in a particular sequence. Each line has a single transaction operation. The possible operations are b (begin transaction), r (read item), w (write item), and e (end transaction). Each operation will be followed by a transaction id that is an integer between 1 and 9.
 
 For r and w operations, an item name follows between parentheses (item names are single letters from A to Z). Two examples are given below.
