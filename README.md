@@ -2,7 +2,7 @@ Implemented a program that simulates the behavior of the two-phase locking (2PL)
 
 For r and w operations, an item name follows between parentheses (item names are single letters from A to Z). Two examples are given below.
 
-Examples of two input files:
+Examples of input file:
 
 b1;                                                                                                        
 
